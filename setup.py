@@ -11,11 +11,15 @@ setup(
     packages=['formidable'],
     include_package_data=True,
     license='BSD License',  # example license
-    description='A simple Django app to conduct Web-based polls.',
+    description='Form builder API and django backend',
     long_description=README,
     url='https://www.example.com/',
-    author='Your Name',
-    author_email='yourname@example.com',
+    author='PeopleDoc',
+    author_email='contact@peopledoc.com',
+    install_requires=[
+        'django==1.8',
+        'djangorestframework',
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
