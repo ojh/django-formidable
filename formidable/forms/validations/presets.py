@@ -98,16 +98,27 @@ class PresetFieldArgument(PresetArgument):
 
     type_ = 'field'
 
+    def get_reference(self, argument):
+        return argument.field_id
+
 
 class PresetValueArgument(PresetArgument):
 
     type_ = 'value'
+
+    def get_reference(self, argument):
+        return argument.value
 
 
 class PresetFieldOrValueArgument(PresetArgument):
 
     def get_types(self):
         return ['field', 'value']
+
+    def get_reference(self, argument):
+        if argument.field_id:
+            return argument.field_id
+        return argument.value
 
 
 class Presets(object):
@@ -129,7 +140,7 @@ class Presets(object):
     def __call__(self, cleaned_data):
         kwargs = self.collect_kwargs(cleaned_data)
         if not self.run(**kwargs):
-            raise ValidationError(self.get_message(kwargs))
+            raise ValidationError(self.get_message())
         return True
 
     def collect_kwargs(self, cleaned_data):
@@ -138,7 +149,15 @@ class Presets(object):
             kwargs[arg.slug] = arg.get_value(self.arguments, cleaned_data)
         return kwargs
 
-    def get_message(self, kwargs):
+    def get_message_kwargs(self):
+        kwargs = {}
+        for argument in self.arguments:
+            parameter = self._declared_arguments[argument.slug]
+            kwargs[argument.slug] = parameter.get_reference(argument)
+        return kwargs
+
+    def get_message(self):
+        kwargs = self.get_message_kwargs()
         return self.message.format(**kwargs)
 
 
@@ -186,3 +205,21 @@ class ComparisonPresets(Presets):
     def run(self, left, operator, right):
         meth = self.mapper[operator]
         return meth(left, right)
+
+
+class RequiredIfNotEmpty(Presets):
+
+    slug = 'required-depends-on-the-value'
+    label = 'required if needed'
+    description = 'mark a field as required depends another field value'
+    default_message = '{reference} is {value}, {field} has to be filled'
+
+    class MetaParameters:
+        reference = PresetFieldArgument('reference')
+        value = PresetValueArgument('value')
+        field = PresetFieldArgument('field')
+
+    def run(self, reference, value, field):
+        if reference == value:
+            return field is not None
+        return True

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 from demo.builder.views import (
-    FormidableListView, FormidableDetailView, FormidableUpdateView, FormidableBuilderView
+    FormidableListView, FormidableDetailView, FormidableUpdateView,
+    FormidableBuilderView, PeopleCreateView, PeopleListView,
 )
 
 urlpatterns = patterns(
@@ -13,4 +14,6 @@ urlpatterns = patterns(
         name='formidable-edit'),
     url(r'^builder/(?P<pk>\d+)$', FormidableBuilderView.as_view(),
         name='formidable-builder'),
+    url(r'^onboarding/', PeopleCreateView.as_view()),
+    url(r'^peoples/', PeopleListView.as_view())
 )
