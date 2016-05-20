@@ -544,6 +544,7 @@ template: slide
 
 <script>
   $(document).ready(function() {
+      // Listen the form-is-valid event
       Formidable.on('form-is-valid', function(status) {
         // actions
         console.log(status);
