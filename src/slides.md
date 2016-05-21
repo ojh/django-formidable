@@ -57,7 +57,7 @@ class: template-title-transition
 # django-formidable
 ## Des poneys dans tout leurs états
 
----
+--
 template: slide
 
 # Pourquoi django-formidable ?
@@ -80,6 +80,7 @@ template: slide
 
 - ### Besoin d'intégration (UI, API..) pour **nos** applications
 
+
 ---
 template: slide
 
@@ -95,7 +96,6 @@ template: slide
 --
 
 - ### Plusieurs points d'entrée (API RESTful et python)
-
 
 ---
 template: slide
@@ -114,6 +114,75 @@ template: slide
   - #### READ\_ONLY
   - #### HIDDEN
 
+
+---
+template: slide
+
+# django-formidable
+## API RESTful
+
+
+- #### POST /api/form/builder
+
+```javascript
+{
+    'label': 'un label',
+    'description': 'description',
+    'fields': [{
+        'type': 'text',
+        'slug': 'first_name',
+        'help_text':....
+        'accesses': {...}
+    }]
+}
+```
+
+---
+template: slide
+
+# django-formidable
+## API RESTful
+
+- #### PUT /api/form/builder
+
+```javascript
+{
+    'id': 42,
+    'label': 'un label',
+    'description': 'description',
+    'fields': [{
+        'type': 'text',
+        'slug': 'first_name',
+        'help_text':....
+        'accesses': {...}
+    }]
+}
+```
+
+---
+template: slide
+
+# django-formidable
+## API RESTful
+
+- #### GET /api/form/42?access='padawan'
+
+```javascript
+{
+    'label': 'un label',
+    'description': 'description',
+    'fields': [{
+        'type': 'text',
+        'slug': 'first_name',
+        'help_text':....
+        'required': true,
+    }]
+}
+```
+
+--
+
+- #### La récupération du contexte est déléguée à l'application cliente.
 
 ---
 template: slide
@@ -190,7 +259,7 @@ template: slide
     <h3>Validations champ à champ</h3>
     <ul>
       <li><h4>Validateurs django</h4></li>
-      <li><h4>Validateurs supplémentaires pour les dates (is\_age\_under...)</h4></li>
+      <li><h4>Validateurs supplémentaires pour les dates (is_age_under...)</h4></li>
     </ul>
   </li>
  </ul>
@@ -235,74 +304,6 @@ template: slide
             return salary + bonus < limitation
 ```
 
----
-template: slide
-
-# django-formidable
-## API Python
-
-- ### Ecrire son objet Formidable comme en django
-
---
-
-- ### Utiliser des objets Formidable
-
---
-
-- ### Calquer sur les fields django
-
---
-
-- ### Avec les options formidable
-
----
-template: slide
-
-
-# django-formidable
-## API Python
-
-
-```python
-    from formidable.forms import FormidableForm
-    from formidable.forms import fields
-
-    class PadawanSubscriptionForm(FormidableForm):
-
-        first_name = fields.CharField(accesses={
-            'padawan': 'REQUIRED',
-            'jedi': 'READ_ONLY',
-        })
-        last_name = fields.CharField(
-            'padawan': 'REQUIRED',
-            'jedi': 'READ_ONLY',
-        )
-        accepted = fields.BooleanField(
-            'padawan': 'HIDDEN',
-            'jedi': 'REQUIRED',
-        )
-```
-
----
-template: slide
-
-# django-formidable
-## API Python
-
-
-```python
-
-    >>> formidable = PadawanSubscriptionForm.to_formidable(label='Subscription Form')
-    >>> padawan_form_class = formidable.get_django_form_class(role='padawan')
-    >>> 'accepted' in padawan_form_class.declared_fields
-    False
-    >>> 'first_name' in padawan_form_class.declared_fields
-    True
-    >>> field = padawan_form_declared_fields['first_name']
-    >>> field.required
-    True
-
-```
 
 ---
 template: transition
