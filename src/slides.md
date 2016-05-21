@@ -57,7 +57,7 @@ class: template-title-transition
 # django-formidable
 ## Des poneys dans tout leurs états
 
---
+---
 template: slide
 
 # Pourquoi django-formidable ?
