@@ -6,7 +6,7 @@ serve: clean-build
 s: serve
 
 build: clean-build
-	$(BROCCOLI) build dists
+	$(BROCCOLI) build dist
 
 clean-build:
 	rm -Rf dist

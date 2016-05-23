@@ -136,7 +136,7 @@ code {
     background-repeat: no-repeat;
     background-color: #fff;
     background-size: $logo-width $logo-height;
-    background-image: url('/img/peopledoc.png');
+    background-image: url('../img/peopledoc.png');
     width: $logo-width;
     height: $logo-height;
     position: absolute;
@@ -152,7 +152,7 @@ code {
     background-repeat: no-repeat;
     background-color: #fff;
     background-size: $logo-big-width $logo-big-height;
-    background-image: url('/img/peopledoc-large.png');
+    background-image: url('../img/peopledoc-large.png');
     width: $logo-big-width;
     height: $logo-big-height;
     position: absolute;
@@ -240,19 +240,19 @@ code {
 // BG image variations
 .template-title-forms {
   &:before {
-    background-image: url('/img/forms.jpg');
+    background-image: url('../img/forms.jpg');
   }
 }
 
 .template-title-bees {
   &:before {
-    background-image: url('/img/bees.jpg');
+    background-image: url('../img/bees.jpg');
   }
 }
 
 .template-title-poney {
   &:before {
-    background-image: url('/img/poney.jpg');
+    background-image: url('../img/poney.jpg');
   }
 }
 
